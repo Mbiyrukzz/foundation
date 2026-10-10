@@ -1,0 +1,33 @@
+{
+  "name": "ashmif-foundation",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tylix dev",
+    "build": "tylix build",
+    "start": "tylix start",
+    "migrate": "tylix migrate",
+    "css:build": "tailwindcss -i ./app/tailwind-input.css -o ./public/tailwind.css",
+    "css:watch": "tailwindcss -i ./app/tailwind-input.css -o ./public/tailwind.css --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tylix/cli": "^0.3.7",
+    "@tylix/core": "^0.3.5",
+    "@tylix/compiler": "^0.3.6",
+    "@tylix/generator": "^0.3.5",
+    "@tylix/orm": "^0.3.5",
+    "@tylix/shared": "^0.3.5",
+    "@tylix/mail": "^0.3.5",
+    "tylix-icons": "^0.3.5",
+    "@tylix/auth": "^0.3.5"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0",
+    "typescript": "^5.5.0",
+    "tsx": "^4.16.0",
+    "@types/node": "^22.0.0"
+  }
+}
