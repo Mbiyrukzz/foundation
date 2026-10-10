@@ -4,7 +4,7 @@ import { IconCheck, IconClipboard } from "tylix-icons"
 
 state
   copied: ""
-  paybill: "000000"
+  paybill: "1185541"
   accounts: [
     { ref: "ZAKAT", title: "Zakat", text: "Obligatory giving, directed to eligible recipients." },
     { ref: "SADAQAH", title: "Sadaqah", text: "Voluntary giving, used wherever the need is greatest." },
@@ -18,7 +18,7 @@ state
     "Enter your amount and M-Pesa PIN, then confirm.",
     "You will get an M-Pesa confirmation SMS. May Allah accept it from you."
   ]
-  bank: { name: "Bank name", account: "Account name", number: "0000000000", branch: "Branch" }
+  bank: { name: "Bank name", account: "Account name", number: "11855410000", branch: "Branch" }
 
 action
   async copyValue(key, value) {

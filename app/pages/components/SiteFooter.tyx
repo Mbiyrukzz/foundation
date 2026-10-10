@@ -21,9 +21,9 @@ template
         <p class="text-xs uppercase tracking-widest text-amber-300 mb-4">Contact</p>
         <div class="flex flex-col gap-2.5 text-sm">
           <span>Mombasa, Kenya</span>
-          <a href="tel:+254700000000" class="hover:text-white transition-colors">+254 700 000 000</a>
+          <a href="tel:+254758839829" class="hover:text-white transition-colors">+254 700 000 000</a>
           <a href="mailto:hello@ashmif.com" class="hover:text-white transition-colors">hello@ashmif.com</a>
-          <a href="https://wa.me/254700000000" class="hover:text-white transition-colors">WhatsApp us</a>
+          <a href="https://wa.me/254758839829" class="hover:text-white transition-colors">WhatsApp us</a>
           <a href="/contact" class="text-amber-300 hover:text-amber-200 transition-colors">Send us a message →</a>
         </div>
       </div>
