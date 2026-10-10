@@ -1,16 +1,35 @@
 component SiteFooter
 
 template
-  <footer class="px-6 py-10 border-t border-slate-800">
-    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2.5">
-        <img src="/logo-mark.png" alt="Tylix" class="w-5 h-5 rounded" />
-        <span class="text-slate-500 text-sm">© 2026 Tylix</span>
+  <footer class="px-6 pt-16 pb-8 bg-emerald-950 text-emerald-100">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-white/10">
+      <div>
+        <p class="font-serif text-xl font-semibold text-white mb-3">Ashmif Foundation</p>
+        <p class="text-sm text-emerald-100/70 leading-relaxed">Serving the needy, funding education, and nurturing faith in Mombasa.</p>
       </div>
-      <div class="flex items-center gap-6">
-        <a href="https://tylix.dev/docs" class="text-slate-400 text-sm hover:text-slate-200 transition">Docs</a>
-        <a href="https://github.com/tylixjs" class="text-slate-400 text-sm hover:text-slate-200 transition">GitHub</a>
-        <a href="https://discord.gg/tylix" class="text-slate-400 text-sm hover:text-slate-200 transition">Discord</a>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-amber-300 mb-4">Explore</p>
+        <div class="flex flex-col gap-2.5 text-sm">
+          <a href="/#about" class="hover:text-white transition-colors">About</a>
+          <a href="/#programs" class="hover:text-white transition-colors">Programs</a>
+          <a href="/#help" class="hover:text-white transition-colors">Get Involved</a>
+          <a href="/contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="/donate" class="hover:text-white transition-colors">Donate</a>
+        </div>
       </div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-amber-300 mb-4">Contact</p>
+        <div class="flex flex-col gap-2.5 text-sm">
+          <span>Mombasa, Kenya</span>
+          <a href="tel:+254700000000" class="hover:text-white transition-colors">+254 700 000 000</a>
+          <a href="mailto:hello@ashmif.com" class="hover:text-white transition-colors">hello@ashmif.com</a>
+          <a href="https://wa.me/254700000000" class="hover:text-white transition-colors">WhatsApp us</a>
+          <a href="/contact" class="text-amber-300 hover:text-amber-200 transition-colors">Send us a message →</a>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-emerald-100/50">
+      <span>© 2026 Ashmif Foundation. All rights reserved.</span>
+      <a href="/login" class="hover:text-emerald-100 transition-colors">Admin</a>
     </div>
   </footer>

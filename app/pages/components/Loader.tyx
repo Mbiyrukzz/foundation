@@ -1,0 +1,21 @@
+component Loader
+
+props
+  label: string
+
+template
+  <div role="status" aria-live="polite" class="flex flex-col items-center justify-center gap-4 py-16">
+    <div class="relative w-14 h-14">
+      <svg class="w-14 h-14 animate-spin motion-reduce:animate-none" viewBox="0 0 50 50" fill="none">
+        <circle cx="25" cy="25" r="20" stroke-width="4" class="stroke-emerald-100"></circle>
+        <circle cx="25" cy="25" r="20" stroke-width="4" stroke-linecap="round" stroke-dasharray="32 94" class="stroke-emerald-800"></circle>
+      </svg>
+      <span class="absolute inset-0 m-auto w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse motion-reduce:animate-none"></span>
+    </div>
+{{#if label}}
+    <p class="text-sm text-stone-500">{{ label }}</p>
+{{/if}}
+{{#if not label}}
+    <span class="sr-only">Loading</span>
+{{/if}}
+  </div>

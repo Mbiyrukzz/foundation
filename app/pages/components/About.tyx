@@ -1,0 +1,26 @@
+component About
+
+template
+  <section id="about" class="px-6 py-24 bg-white border-y border-stone-200">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+      <div>
+        <p class="text-xs tracking-widest uppercase text-amber-600 font-semibold mb-3">Who we are</p>
+        <h2 class="font-serif text-3xl md:text-4xl font-semibold text-emerald-900 mb-6 tracking-tight">A new foundation with an old duty</h2>
+        <p class="text-stone-600 leading-relaxed mb-4">
+          Ashmif Foundation is an Islamic charity based in Mombasa. We have just begun, and we are building
+          it the right way: openly, carefully, and with the community beside us.
+        </p>
+        <p class="text-stone-600 leading-relaxed">
+          Our work follows one belief: that caring for the poor, educating children, and teaching
+          the Quran are not separate causes, but one responsibility.
+        </p>
+      </div>
+      <div class="rounded-2xl bg-emerald-900 text-white p-10 shadow-lg relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-amber-400/10"></div>
+        <p class="relative text-xs tracking-widest uppercase text-amber-300 font-semibold mb-4">Our mission</p>
+        <p class="relative font-serif text-2xl leading-snug">
+          To relieve hardship, open the door to education, and nurture faith in the families of Mombasa.
+        </p>
+      </div>
+    </div>
+  </section>

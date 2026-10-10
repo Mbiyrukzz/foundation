@@ -50,28 +50,45 @@ export class AuthController {
         this.mailConfig = mailConfig;
     }
 
-    async register(req: TylixRequest, res: TylixResponse) {
+       async register(req: TylixRequest, res: TylixResponse) {
         const result = validateRegister(req.body);
         if (!result.valid) {
             return res.status(422).json({ errors: result.errors });
         }
 
-        const existing = await User.all();
-        if (existing.some((u) => u.email === req.body.email)) {
-            return res.status(422).json({ errors: { email: ["This email is already registered."] } });
+        // Registration is closed: only the configured admin email, and only once.
+        const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+        const email = String(req.body.email).trim();
+        if (!adminEmail || email.toLowerCase() !== adminEmail) {
+            return res.status(403).json({ error: "Registration is closed." });
         }
 
-        const user = await User.create(req.body);
+        const password = req.body.password as string;
+        if (password.length < 8) {
+            return res.status(422).json({ errors: { password: ["Password must be at least 8 characters."] } });
+        }
+
+        const existing = await User.all();
+        if (existing.length > 0) {
+            return res.status(403).json({ error: "Registration is closed." });
+        }
+
+        // Whitelist fields. Never pass req.body straight in: email_verified_at is fillable.
+        const user = await User.create({
+            name: req.body.name,
+            email,
+            password,
+        });
         if (!user) {
             return res.status(500).json({ error: "Failed to create user." });
         }
 
-      const verificationToken = signToken(
-    { userId: user.id, purpose: "email-verify" },
-    this.secret,
-    { expiresInSeconds: 60 * 60 * 24 },
-);
-await sendVerificationEmail(user, verificationToken, this.mailConfig);
+        const verificationToken = signToken(
+            { userId: user.id, purpose: "email-verify" },
+            this.secret,
+            { expiresInSeconds: 60 * 60 * 24 },
+        );
+        await sendVerificationEmail(user, verificationToken, this.mailConfig);
 
         return res.status(201).json({
             user: User.toSafeObject(user),

@@ -1,0 +1,128 @@
+page Messages
+
+needs
+  Auth
+
+state
+  checkedAuth: false
+  loading: true
+  error: ""
+  messages: []
+  openId: null
+
+action
+  toggle(id) {
+    if this.openId is id {
+      this.openId = null
+    } else {
+      this.openId = id
+    }
+  }
+
+  async load() {
+    const result = await useApi("/api/contacts?limit=100")
+    if result.status is 401 {
+      window.location.href = "/login"
+      return null
+    }
+    if result.ok {
+      const fmt = new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Africa/Nairobi" })
+      const sorted = result.data.data.slice().sort((a, b) => b.id - a.id)
+      this.messages = sorted.map(m => Object.assign({}, m, { when: fmt.format(new Date(m.created_at)) }))
+      this.error = ""
+    } else {
+      this.error = "Could not load messages."
+    }
+    this.loading = false
+  }
+
+  async remove(id) {
+    if window.confirm("Delete this message? This cannot be undone.") {
+      await useApi("/api/contacts/" + id, { method: "DELETE" })
+      this.openId = null
+      await this.load()
+    }
+  }
+
+onMount
+  async {
+    if not Auth.user {
+      window.location.href = "/login"
+      return null
+    }
+    this.checkedAuth = true
+    await this.load()
+  }
+
+template
+{{#if checkedAuth}}
+  <div class="min-h-[calc(100vh-4rem)] bg-stone-50 px-6 lg:px-12 py-10">
+    <div class="max-w-4xl mx-auto">
+      <a href="/dashboard" class="text-sm text-emerald-800 hover:underline font-medium">← Back to dashboard</a>
+
+      <div class="flex items-end justify-between mt-4 mb-8">
+        <div>
+          <p class="text-amber-600 text-xs font-semibold uppercase tracking-widest mb-1">Inbox</p>
+          <h1 class="font-serif text-3xl font-semibold text-emerald-900">Messages</h1>
+        </div>
+        <p class="text-stone-500 text-sm">{{ messages.length }} total</p>
+      </div>
+
+{{#if error}}
+      <div role="alert" class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 mb-6">
+        <p class="text-rose-700 text-sm">{{ error }}</p>
+      </div>
+{{/if}}
+
+{{#if loading}}
+      <Loader label="Loading messages…" />
+{{/if}}
+
+{{#if not loading}}
+{{#if messages.length is 0}}
+      <div class="rounded-2xl border border-dashed border-stone-300 bg-white p-12 text-center">
+        <p class="font-serif text-xl text-emerald-900 mb-1">No messages yet</p>
+        <p class="text-stone-500 text-sm">Messages sent from the Contact page will appear here.</p>
+      </div>
+{{/if}}
+
+{{#if messages.length is not 0}}
+      <div class="space-y-3">
+{{#each m in messages}}
+        <div class="rounded-2xl border border-stone-200 bg-white shadow-sm overflow-hidden">
+          <button onclick="{{ toggle(m.id) }}" class="w-full text-left px-6 py-4 flex items-start justify-between gap-4 hover:bg-stone-50 transition-colors">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+{{#if m.subject is "Refer a family"}}
+                <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-semibold uppercase tracking-wide">{{ m.subject }}</span>
+{{/if}}
+{{#if m.subject is not "Refer a family"}}
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-semibold uppercase tracking-wide">{{ m.subject }}</span>
+{{/if}}
+              </div>
+              <p class="text-stone-800 font-medium truncate">{{ m.name }}</p>
+              <p class="text-stone-500 text-sm truncate">{{ m.email }}</p>
+            </div>
+            <p class="text-stone-400 text-xs shrink-0 pt-1">{{ m.when }}</p>
+          </button>
+
+{{#if m.id is openId}}
+          <div class="px-6 pb-6 pt-2 border-t border-stone-100">
+{{#if m.phone}}
+            <p class="text-sm text-stone-500 mb-3">Phone: <a href="{{ 'tel:' + m.phone }}" class="text-emerald-800 hover:underline">{{ m.phone }}</a></p>
+{{/if}}
+            <p class="text-stone-700 text-sm leading-relaxed whitespace-pre-wrap mb-6">{{ m.message }}</p>
+            <div class="flex items-center gap-3">
+              <a href="{{ 'mailto:' + m.email }}" class="px-5 py-2 rounded-full bg-emerald-800 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors">Reply by email</a>
+              <button onclick="{{ remove(m.id) }}" class="px-5 py-2 rounded-full border border-stone-300 text-stone-600 text-sm font-medium hover:border-rose-300 hover:text-rose-700 transition-colors">Delete</button>
+            </div>
+          </div>
+{{/if}}
+        </div>
+{{/each}}
+      </div>
+{{/if}}
+{{/if}}
+    </div>
+  </div>
+{{/if}}

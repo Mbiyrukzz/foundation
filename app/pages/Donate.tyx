@@ -1,0 +1,117 @@
+page Donate
+
+import { IconCheck, IconClipboard } from "tylix-icons"
+
+state
+  copied: ""
+  paybill: "000000"
+  accounts: [
+    { ref: "ZAKAT", title: "Zakat", text: "Obligatory giving, directed to eligible recipients." },
+    { ref: "SADAQAH", title: "Sadaqah", text: "Voluntary giving, used wherever the need is greatest." },
+    { ref: "EDUCATION", title: "Education Fund", text: "School fees, uniforms, and learning materials for children." },
+    { ref: "MADRASSA", title: "Madrassa", text: "Supports Quran and Islamic studies classes." }
+  ]
+  steps: [
+    "Open M-Pesa and choose Lipa na M-Pesa, then Paybill.",
+    "Enter the business number shown above.",
+    "Enter the account name that matches your intention.",
+    "Enter your amount and M-Pesa PIN, then confirm.",
+    "You will get an M-Pesa confirmation SMS. May Allah accept it from you."
+  ]
+  bank: { name: "Bank name", account: "Account name", number: "0000000000", branch: "Branch" }
+
+action
+  async copyValue(key, value) {
+    await navigator.clipboard.writeText(value)
+    this.copied = key
+  }
+
+template
+  <div>
+    <section class="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-800 text-white">
+      <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-amber-400/10 blur-3xl"></div>
+      <div class="relative max-w-4xl mx-auto px-6 py-20 text-center">
+        <p class="text-xs tracking-widest uppercase text-amber-300 font-semibold mb-3">Donate</p>
+        <h1 class="font-serif text-4xl md:text-5xl font-semibold mb-4 tracking-tight">Be part of the reward</h1>
+        <p class="text-emerald-100/90 max-w-xl mx-auto leading-relaxed">
+          Every gift is an amanah, a trust. Choose the account name that matches your intention and give by M-Pesa in under a minute.
+        </p>
+      </div>
+    </section>
+
+    <section class="px-6 py-20 bg-stone-50">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10">
+
+        <div class="lg:col-span-3 space-y-6">
+          <div class="rounded-2xl bg-white border border-stone-200 p-8 shadow-sm">
+            <p class="text-xs uppercase tracking-widest text-stone-400 mb-2">M-Pesa Paybill</p>
+            <div class="flex items-center justify-between gap-4 mb-8">
+              <p class="font-serif text-5xl font-semibold text-emerald-900">{{ paybill }}</p>
+              <button onclick="{{ copyValue('paybill', paybill) }}" aria-label="Copy paybill number" class="inline-flex items-center gap-1.5 text-xs text-stone-500 hover:text-emerald-700 px-3 py-1.5 rounded-full border border-stone-200 hover:border-emerald-300 transition-colors">
+{{#if copied is "paybill"}}
+                <IconCheck class="w-3.5 h-3.5" /> Copied
+{{/if}}
+{{#if copied is not "paybill"}}
+                <IconClipboard class="w-3.5 h-3.5" /> Copy
+{{/if}}
+              </button>
+            </div>
+
+            <p class="text-xs uppercase tracking-widest text-stone-400 mb-4">Account name</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+{{#each a in accounts}}
+              <div class="rounded-xl border border-stone-200 bg-stone-50 p-4">
+                <p class="font-semibold text-emerald-800 text-sm tracking-wide mb-1">{{ a.ref }}</p>
+                <p class="text-stone-800 text-sm font-medium mb-1">{{ a.title }}</p>
+                <p class="text-stone-500 text-xs leading-relaxed">{{ a.text }}</p>
+              </div>
+{{/each}}
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-stone-200 p-8 shadow-sm">
+            <p class="text-xs uppercase tracking-widest text-stone-400 mb-4">Bank transfer</p>
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between gap-4"><span class="text-stone-500">Bank</span><span class="text-stone-800 font-medium">{{ bank.name }}</span></div>
+              <div class="flex justify-between gap-4"><span class="text-stone-500">Account name</span><span class="text-stone-800 font-medium">{{ bank.account }}</span></div>
+              <div class="flex justify-between gap-4 items-center">
+                <span class="text-stone-500">Account number</span>
+                <span class="flex items-center gap-3">
+                  <span class="text-stone-800 font-medium">{{ bank.number }}</span>
+                  <button onclick="{{ copyValue('bank', bank.number) }}" aria-label="Copy account number" class="text-xs text-stone-500 hover:text-emerald-700 px-2.5 py-1 rounded-full border border-stone-200 hover:border-emerald-300 transition-colors">
+{{#if copied is "bank"}}
+                    Copied
+{{/if}}
+{{#if copied is not "bank"}}
+                    Copy
+{{/if}}
+                  </button>
+                </span>
+              </div>
+              <div class="flex justify-between gap-4"><span class="text-stone-500">Branch</span><span class="text-stone-800 font-medium">{{ bank.branch }}</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="rounded-2xl bg-emerald-900 text-white p-8 shadow-lg lg:sticky lg:top-24">
+            <p class="text-xs uppercase tracking-widest text-amber-300 font-semibold mb-5">How to give by M-Pesa</p>
+            <ol class="space-y-4">
+{{#each s in steps}}
+              <li class="flex gap-3 text-sm text-emerald-100/90 leading-relaxed">
+                <span class="w-6 h-6 rounded-full bg-amber-400 text-emerald-950 text-xs font-semibold flex items-center justify-center shrink-0 mt-0.5">•</span>
+                <span>{{ s }}</span>
+              </li>
+{{/each}}
+            </ol>
+            <div class="mt-8 pt-6 border-t border-white/10">
+              <p class="text-xs text-emerald-100/70 leading-relaxed">
+                Questions about zakat or where your gift goes? <a href="/contact" class="text-amber-300 hover:text-amber-200 underline">Contact us</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>

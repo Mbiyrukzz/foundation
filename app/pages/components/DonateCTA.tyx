@@ -1,0 +1,19 @@
+component DonateCTA
+
+import { IconArrowRight } from "tylix-icons"
+
+template
+  <section class="px-6 py-24 bg-gradient-to-br from-emerald-950 to-emerald-800 text-white">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="text-xs tracking-widest uppercase text-amber-300 font-semibold mb-3">Donate</p>
+      <h2 class="font-serif text-3xl md:text-4xl font-semibold mb-4 tracking-tight">Be part of the reward</h2>
+      <p class="text-emerald-100/90 mb-10 max-w-xl mx-auto leading-relaxed">
+        Your zakat and sadaqah help families in need, keep children in school, and sustain our madrassa.
+      </p>
+      <a href="/donate" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-amber-500 text-emerald-950 font-semibold shadow hover:bg-amber-400 transition-colors">
+        Give Today
+        <IconArrowRight class="w-4 h-4" />
+      </a>
+      <p class="text-emerald-100/70 text-xs mt-6">May Allah accept from you and multiply your reward.</p>
+    </div>
+  </section>

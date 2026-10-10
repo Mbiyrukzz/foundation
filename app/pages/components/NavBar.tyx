@@ -1,0 +1,42 @@
+component NavBar
+
+state
+  open: false
+
+action
+  openMenu() {
+    this.open = true
+  }
+  closeMenu() {
+    this.open = false
+  }
+
+template
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-stone-200">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2.5">
+        <span class="w-9 h-9 rounded-full bg-emerald-800 text-amber-300 flex items-center justify-center font-serif font-semibold">A</span>
+        <span class="font-serif text-lg font-semibold text-emerald-900 tracking-tight">Ashmif Foundation</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm text-stone-600">
+        <a href="#about" class="hover:text-emerald-800 transition-colors">About</a>
+        <a href="#programs" class="hover:text-emerald-800 transition-colors">Programs</a>
+        <a href="#help" class="hover:text-emerald-800 transition-colors">Get Involved</a>
+        <a href="#contact" class="hover:text-emerald-800 transition-colors">Contact</a>
+        <a href="#donate" class="px-5 py-2 rounded-full bg-amber-500 text-emerald-950 font-semibold hover:bg-amber-400 transition-colors">Donate</a>
+      </nav>
+      <button onclick="{{ openMenu() }}" aria-label="Open menu" class="md:hidden p-2 text-stone-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
+      </button>
+    </div>
+{{#if open}}
+    <div class="md:hidden border-t border-stone-200 bg-white px-6 py-5 flex flex-col gap-4 text-stone-700">
+      <button onclick="{{ closeMenu() }}" class="self-end text-xs uppercase tracking-wider text-stone-400">Close</button>
+      <a href="#about" onclick="{{ closeMenu() }}">About</a>
+      <a href="#programs" onclick="{{ closeMenu() }}">Programs</a>
+      <a href="#help" onclick="{{ closeMenu() }}">Get Involved</a>
+      <a href="#contact" onclick="{{ closeMenu() }}">Contact</a>
+      <a href="#donate" onclick="{{ closeMenu() }}" class="text-center px-5 py-2.5 rounded-full bg-amber-500 text-emerald-950 font-semibold">Donate</a>
+    </div>
+{{/if}}
+  </header>

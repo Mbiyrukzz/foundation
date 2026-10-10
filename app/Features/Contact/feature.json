@@ -1,0 +1,39 @@
+{
+  "name": "Contact",
+  "version": "1.0.0",
+  "table": "contacts",
+  "model": "Contact",
+  "controller": "ContactController",
+  "validator": "ContactValidator",
+  "language": "typescript",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "phone",
+      "type": "string"
+    },
+    {
+      "name": "subject",
+      "type": "string"
+    },
+    {
+      "name": "message",
+      "type": "text"
+    }
+  ],
+  "relations": [],
+  "auth": true,
+  "permissions": [
+    "contact.view",
+    "contact.create",
+    "contact.update",
+    "contact.delete"
+  ]
+}

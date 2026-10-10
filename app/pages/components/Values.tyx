@@ -1,0 +1,21 @@
+component Values
+
+state
+  values: [
+    { name: "Amanah", meaning: "Trust", text: "Every donation is a trust. We handle it with care and account for it openly." },
+    { name: "Rahma", meaning: "Compassion", text: "We serve people with dignity, whatever their circumstances." },
+    { name: "Ihsan", meaning: "Excellence", text: "We aim to do each good deed as well as we possibly can." }
+  ]
+
+template
+  <section class="px-6 py-20 bg-stone-50">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+{{#each v in values}}
+      <div>
+        <p class="font-serif text-2xl font-semibold text-emerald-800">{{ v.name }}</p>
+        <p class="text-xs tracking-widest uppercase text-amber-600 mb-3">{{ v.meaning }}</p>
+        <p class="text-stone-500 text-sm leading-relaxed">{{ v.text }}</p>
+      </div>
+{{/each}}
+    </div>
+  </section>

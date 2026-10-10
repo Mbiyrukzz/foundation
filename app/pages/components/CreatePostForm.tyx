@@ -52,57 +52,58 @@ action
   }
 
 template
-  <button onclick="{{ open() }}" class="inline-flex items-center gap-1.5 text-sm bg-emerald-500 text-white dark:text-slate-950 font-semibold rounded-full px-4 py-2 shadow-sm hover:bg-emerald-400 hover:shadow transition-all">
+  <button onclick="{{ open() }}" class="inline-flex items-center gap-1.5 text-sm bg-emerald-800 text-white font-semibold rounded-full px-5 py-2.5 shadow-sm hover:bg-emerald-700 transition-colors">
     <IconPlus class="w-4 h-4" /> New Post
   </button>
 
 {{#if showModal}}
-  <div role="dialog" aria-modal="true" aria-labelledby="create-post-title" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-sm px-6">
-    <div class="w-full max-w-md rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-200 dark:bg-slate-900 shadow-xl p-6">
-      <div class="flex items-center justify-between mb-5">
-        <h3 id="create-post-title" class="text-slate-900 dark:text-slate-200 font-medium">New Post</h3>
-        <button onclick="{{ close() }}" aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+  <div role="dialog" aria-modal="true" aria-labelledby="create-post-title" class="fixed inset-0 z-50 flex items-center justify-center bg-emerald-950/60 backdrop-blur-sm px-6">
+    <div class="w-full max-w-lg rounded-2xl border border-stone-200 bg-white shadow-xl p-7">
+      <div class="flex items-center justify-between mb-2">
+        <h3 id="create-post-title" class="font-serif text-xl font-semibold text-emerald-900">New post</h3>
+        <button onclick="{{ close() }}" aria-label="Close" class="w-8 h-8 flex items-center justify-center rounded-full text-stone-400 hover:text-stone-800 hover:bg-stone-100 transition-colors">
           <IconX class="w-4 h-4" />
         </button>
       </div>
+      <p class="text-stone-500 text-xs mb-6">Posts appear on the public blog as soon as you create them.</p>
 
-      <label for="new-post-title" class="block text-slate-500 text-xs mb-1.5">Title</label>
+      <label for="new-post-title" class="block text-stone-600 text-xs font-medium mb-2">Title</label>
       <input
         id="new-post-title"
         type="text"
         autofocus
         value="{{ title }}"
         oninput="{{ title = $event.target.value }}"
-        class="w-full mb-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-200 dark:bg-slate-950 text-slate-900 dark:text-slate-200 text-sm px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-colors"
-        placeholder="e.g. Launch week recap"
+        class="w-full mb-4 rounded-xl border border-stone-300 bg-white text-stone-800 px-4 py-2.5 outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-700 transition"
+        placeholder="e.g. School fees paid for 20 students"
       />
 
-      <label for="new-post-body" class="block text-slate-500 text-xs mb-1.5">Body</label>
+      <label for="new-post-body" class="block text-stone-600 text-xs font-medium mb-2">Story</label>
       <textarea
         id="new-post-body"
-        rows="4"
+        rows="8"
         value="{{ body }}"
         oninput="{{ body = $event.target.value }}"
-        class="w-full mb-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-200 dark:bg-slate-950 text-slate-900 dark:text-slate-200 text-sm px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 resize-none transition-colors"
-        placeholder="Write something…"
+        class="w-full mb-4 rounded-xl border border-stone-300 bg-white text-stone-800 px-4 py-2.5 outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-700 resize-none transition"
+        placeholder="Write the update here. Blank lines start a new paragraph."
       ></textarea>
 
 {{#if error}}
-      <p role="alert" class="text-rose-500 text-sm mb-4">{{ error }}</p>
+      <p role="alert" class="text-rose-700 text-sm mb-4">{{ error }}</p>
 {{/if}}
 
       <div class="flex items-center justify-end gap-3">
-        <button onclick="{{ close() }}" class="text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 px-3 py-2 transition-colors">
+        <button onclick="{{ close() }}" class="text-sm text-stone-500 hover:text-stone-800 px-3 py-2 transition-colors">
           Cancel
         </button>
 {{#if creating}}
-        <button disabled class="text-sm bg-emerald-500 text-white dark:text-slate-950 font-semibold rounded-full px-4 py-2 opacity-50">
-          Creating…
+        <button disabled class="inline-flex items-center gap-2 text-sm bg-emerald-800 text-white font-semibold rounded-full px-5 py-2.5 opacity-70">
+          <Spinner /> Publishing…
         </button>
 {{/if}}
 {{#if not creating}}
-        <button onclick="{{ submit() }}" class="inline-flex items-center gap-1.5 text-sm bg-emerald-500 text-white dark:text-slate-950 font-semibold rounded-full px-4 py-2 shadow-sm hover:bg-emerald-400 hover:shadow transition-all">
-          <IconPlus class="w-4 h-4" /> Create Post
+        <button onclick="{{ submit() }}" class="text-sm bg-emerald-800 text-white font-semibold rounded-full px-5 py-2.5 shadow-sm hover:bg-emerald-700 transition-colors">
+          Publish
         </button>
 {{/if}}
       </div>

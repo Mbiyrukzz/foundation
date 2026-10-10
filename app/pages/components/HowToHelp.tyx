@@ -1,0 +1,29 @@
+component HowToHelp
+
+import { IconArrowRight } from "tylix-icons"
+
+state
+  ways: [
+    { title: "Give", text: "Zakat, Sadaqah, or a gift toward a child's education.", link: "/donate", cta: "Donate now" },
+    { title: "Volunteer", text: "Give your time, skills, or teaching hours to our programs.", link: "/contact", cta: "Offer your time" },
+    { title: "Refer a family", text: "Know someone who needs help? Tell us, in confidence.", link: "/contact", cta: "Get in touch" }
+  ]
+
+template
+  <section id="help" class="px-6 py-24 bg-white border-y border-stone-200">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="font-serif text-3xl md:text-4xl font-semibold text-emerald-900 text-center mb-14 tracking-tight">Ways to Get Involved</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+{{#each w in ways}}
+        <div class="rounded-2xl border border-stone-200 bg-stone-50 p-8 flex flex-col">
+          <h3 class="font-serif text-xl font-semibold text-emerald-900 mb-2">{{ w.title }}</h3>
+          <p class="text-stone-500 text-sm leading-relaxed mb-6 flex-1">{{ w.text }}</p>
+          <a href="{{ w.link }}" class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-800 hover:text-amber-600 transition-colors">
+            {{ w.cta }}
+            <IconArrowRight class="w-4 h-4" />
+          </a>
+        </div>
+{{/each}}
+      </div>
+    </div>
+  </section>

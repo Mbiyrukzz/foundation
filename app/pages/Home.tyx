@@ -1,15 +1,24 @@
 page Home
 
-uses
-  Auth
+state
+  latest: []
+
+onMount
+  async {
+    const result = await useApi("/api/blog")
+    if result.ok {
+      const fmt = new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeZone: "Africa/Nairobi" })
+      this.latest = result.data.data.slice(0, 3).map(p => Object.assign({}, p, { when: fmt.format(new Date(p.created_at)) }))
+    }
+  }
 
 template
-  <div>
-    <Hero loggedIn="{{ Auth.user }}" />
-    <InstallSnippet />
-    <Stats />
-    <FeatureGrid />
-    <Testimonials />
-    <CTASection loggedIn="{{ Auth.user }}" />
-    <SiteFooter />
+  <div class="bg-stone-50 text-stone-800">
+    <Hero />
+    <Programs />
+    <About />
+    <Values />
+    <HowToHelp />
+    <LatestUpdates posts="{{ latest }}" />
+    <DonateCTA />
   </div>

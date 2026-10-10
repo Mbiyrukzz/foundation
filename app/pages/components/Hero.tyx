@@ -2,42 +2,32 @@ component Hero
 
 import { IconArrowRight } from "tylix-icons"
 
-props
-  loggedIn: boolean
-
 template
-  <section class="px-6 pt-28 pb-20 text-center bg-slate-200 dark:bg-slate-950 transition-colors">
-    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-200 dark:bg-slate-900 text-slate-500 dark:text-slate-400 text-xs font-medium mb-8">
-      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-      v0.1 is live — now with hot reload
-    </span>
-
-    <h1 class="text-5xl md:text-7xl font-semibold max-w-4xl mx-auto leading-[1.05] mb-6 tracking-tight text-slate-900 dark:text-slate-200">
-      Full-stack JavaScript,
-      <br />
-      <span class="text-emerald-500">without the virtual DOM</span>
-    </h1>
-
-    <p class="text-slate-500 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-      A reactive compiler, a generator-first CLI, and a database-agnostic
-      ORM — wired together so you write pages, not plumbing.
-    </p>
-
-    <div class="flex items-center justify-center gap-3">
-{{#if loggedIn}}
-      <a href="/dashboard" class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-emerald-500 text-white dark:text-slate-950 font-semibold shadow-sm hover:bg-emerald-400 hover:shadow transition-all">
-        Go to Dashboard
-        <IconArrowRight class="w-4 h-4" />
-      </a>
-{{/if}}
-{{#if not loggedIn}}
-      <a href="/register" class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-emerald-500 text-white dark:text-slate-950 font-semibold shadow-sm hover:bg-emerald-400 hover:shadow transition-all">
-        Get Started
-        <IconArrowRight class="w-4 h-4" />
-      </a>
-      <a href="/dashboard" class="px-7 py-3 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-200 dark:hover:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
-        Continue as Guest
-      </a>
-{{/if}}
+  <section class="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-800 text-white">
+    <div class="absolute -top-28 -right-28 w-[28rem] h-[28rem] rounded-full bg-amber-400/10 blur-3xl"></div>
+    <div class="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-emerald-400/10 blur-3xl"></div>
+    <div class="relative max-w-4xl mx-auto px-6 pt-24 pb-28 text-center">
+      <p lang="ar" dir="rtl" class="text-2xl text-amber-300 mb-6">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+      <span class="inline-block px-3 py-1 rounded-full border border-white/20 bg-white/5 text-xs tracking-widest uppercase text-emerald-100 mb-8">
+        Mombasa, Kenya · Islamic Charity
+      </span>
+      <h1 class="font-serif text-4xl md:text-6xl font-semibold leading-tight mb-6 tracking-tight">
+        Serving the needy.<br />
+        <span class="text-amber-300">Funding education.</span><br />
+        Nurturing faith.
+      </h1>
+      <p class="text-emerald-100/90 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+        Ashmif Foundation is a new community charity in Mombasa, standing with families in need,
+        helping children stay in school, and teaching the next generation the Quran.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="/donate" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-amber-500 text-emerald-950 font-semibold shadow hover:bg-amber-400 transition-colors">
+          Give Today
+          <IconArrowRight class="w-4 h-4" />
+        </a>
+        <a href="#programs" class="px-8 py-3.5 rounded-full border border-white/30 text-white font-medium hover:bg-white/10 transition-colors">
+          Our Programs
+        </a>
+      </div>
     </div>
   </section>

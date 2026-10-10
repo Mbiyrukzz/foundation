@@ -1,0 +1,198 @@
+page Contact
+
+state
+  name: ""
+  email: ""
+  phone: ""
+  subject: "General enquiry"
+  message: ""
+  subjects: ["General enquiry", "Volunteer", "Refer a family", "Donation question"]
+  error: ""
+  submitting: false
+  sent: false
+
+action
+  setField(field, value) {
+    this[field] = value
+  }
+
+  async submit() {
+    if not this.submitting {
+      if not this.name or not this.email or not this.message {
+        this.error = "Please fill in your name, email, and message."
+        return null
+      }
+
+      this.submitting = true
+      this.error = ""
+
+      const result = await useApi("/api/contact", {
+        method: "POST",
+        body: {
+          name: this.name,
+          email: this.email,
+          phone: this.phone,
+          subject: this.subject,
+          message: this.message
+        }
+      })
+
+      if result.ok {
+        this.sent = true
+        this.submitting = false
+      } else if result.status is 422 and result.data.errors {
+        const firstField = Object.keys(result.data.errors)[0]
+        this.error = result.data.errors[firstField][0]
+        this.submitting = false
+      } else {
+        this.error = result.error or "Could not send your message. Please try again."
+        this.submitting = false
+      }
+    }
+  }
+
+template
+  <div>
+    <section class="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-800 text-white">
+      <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-amber-400/10 blur-3xl"></div>
+      <div class="relative max-w-4xl mx-auto px-6 py-20 text-center">
+        <p class="text-xs tracking-widest uppercase text-amber-300 font-semibold mb-3">Contact</p>
+        <h1 class="font-serif text-4xl md:text-5xl font-semibold mb-4 tracking-tight">We'd love to hear from you</h1>
+        <p class="text-emerald-100/90 max-w-xl mx-auto leading-relaxed">
+          Questions, offers to volunteer, or a family you think we can help. Write to us and we will reply as soon as we can.
+        </p>
+      </div>
+    </section>
+
+    <section class="px-6 py-20 bg-stone-50">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10">
+
+        <div class="lg:col-span-2 space-y-6">
+          <div class="rounded-2xl bg-white border border-stone-200 p-7 shadow-sm">
+            <p class="text-xs uppercase tracking-widest text-amber-600 font-semibold mb-4">Reach us directly</p>
+            <div class="space-y-4 text-sm text-stone-700">
+              <div>
+                <p class="text-stone-400 text-xs mb-0.5">Location</p>
+                <p>Mombasa, Kenya</p>
+              </div>
+              <div>
+                <p class="text-stone-400 text-xs mb-0.5">Phone</p>
+                <a href="tel:+254700000000" class="hover:text-emerald-800 transition-colors">+254 700 000 000</a>
+              </div>
+              <div>
+                <p class="text-stone-400 text-xs mb-0.5">WhatsApp</p>
+                <a href="https://wa.me/254700000000" class="hover:text-emerald-800 transition-colors">Chat with us</a>
+              </div>
+              <div>
+                <p class="text-stone-400 text-xs mb-0.5">Email</p>
+                <a href="mailto:hello@ashmif.com" class="hover:text-emerald-800 transition-colors">hello@ashmif.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-emerald-900 text-white p-7 shadow-sm">
+            <p class="text-xs uppercase tracking-widest text-amber-300 font-semibold mb-3">Need help?</p>
+            <p class="text-sm text-emerald-100/90 leading-relaxed">
+              If you or a family you know needs assistance, choose "Refer a family" in the form. Your details are handled in confidence.
+            </p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-3 rounded-2xl bg-white border border-stone-200 p-8 shadow-sm">
+{{#if sent}}
+          <div class="text-center py-10">
+            <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl mx-auto mb-5">✓</div>
+            <h2 class="font-serif text-2xl font-semibold text-emerald-900 mb-2">Message sent</h2>
+            <p class="text-stone-500 text-sm max-w-sm mx-auto mb-8">
+              Jazakallahu khairan, {{ name }}. We have received your message and will reply to {{ email }}.
+            </p>
+            <a href="/" class="inline-block px-7 py-3 rounded-full bg-emerald-800 text-white font-semibold hover:bg-emerald-700 transition-colors">Back to home</a>
+          </div>
+{{/if}}
+
+{{#if not sent}}
+          <h2 class="font-serif text-2xl font-semibold text-emerald-900 mb-6">Send a message</h2>
+
+{{#if error}}
+          <div role="alert" aria-live="polite" class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 mb-6">
+            <p class="text-rose-700 text-sm">{{ error }}</p>
+          </div>
+{{/if}}
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="name" class="block text-stone-600 text-xs font-medium mb-2">Full name</label>
+              <input
+                id="name"
+                name="name"
+                autocomplete="name"
+                placeholder="Your name"
+                value="{{ name }}"
+                oninput="{{ setField('name', event.target.value) }}"
+                class="w-full border border-stone-300 bg-white text-stone-800 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-700 transition"
+              />
+            </div>
+            <div>
+              <label for="phone" class="block text-stone-600 text-xs font-medium mb-2">Phone (optional)</label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                placeholder="+254 ..."
+                value="{{ phone }}"
+                oninput="{{ setField('phone', event.target.value) }}"
+                class="w-full border border-stone-300 bg-white text-stone-800 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-700 transition"
+              />
+            </div>
+          </div>
+
+          <label for="email" class="block text-stone-600 text-xs font-medium mb-2">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            value="{{ email }}"
+            oninput="{{ setField('email', event.target.value) }}"
+            class="w-full border border-stone-300 bg-white text-stone-800 rounded-xl px-4 py-2.5 mb-5 outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-700 transition"
+          />
+
+          <p class="block text-stone-600 text-xs font-medium mb-2">What is this about?</p>
+          <div class="flex flex-wrap gap-2 mb-5">
+{{#each s in subjects}}
+{{#if s is subject}}
+            <button onclick="{{ setField('subject', s) }}" class="px-4 py-1.5 rounded-full text-sm font-medium bg-emerald-800 text-white border border-emerald-800">{{ s }}</button>
+{{/if}}
+{{#if s is not subject}}
+            <button onclick="{{ setField('subject', s) }}" class="px-4 py-1.5 rounded-full text-sm font-medium bg-white text-stone-600 border border-stone-300 hover:border-emerald-700 hover:text-emerald-800 transition-colors">{{ s }}</button>
+{{/if}}
+{{/each}}
+          </div>
+
+          <label for="message" class="block text-stone-600 text-xs font-medium mb-2">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="6"
+            placeholder="How can we help?"
+            oninput="{{ setField('message', event.target.value) }}"
+            class="w-full border border-stone-300 bg-white text-stone-800 rounded-xl px-4 py-2.5 mb-6 outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-700 transition"
+          >{{ message }}</textarea>
+
+{{#if submitting}}
+          <button disabled class="w-full bg-emerald-800 text-white rounded-full py-3 font-semibold opacity-50 transition">
+            Sending…
+          </button>
+{{/if}}
+{{#if not submitting}}
+          <button onclick="{{ submit() }}" class="w-full bg-emerald-800 text-white rounded-full py-3 font-semibold shadow-sm hover:bg-emerald-700 hover:shadow transition-all">
+            Send Message
+          </button>
+{{/if}}
+{{/if}}
+        </div>
+      </div>
+    </section>
+  </div>

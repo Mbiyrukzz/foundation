@@ -1,0 +1,5 @@
+export const listContact = () => useApi(`/api/contacts`)
+export const getContact = (id: number | string) => useApi(`/api/contacts/${id}`)
+export const createContact = (data: unknown) => useApi(`/api/contacts`, { method: 'POST', body: data })
+export const updateContact = (id: number | string, data: unknown) => useApi(`/api/contacts/${id}`, { method: 'PUT', body: data })
+export const deleteContact = (id: number | string) => useApi(`/api/contacts/${id}`, { method: 'DELETE' })
